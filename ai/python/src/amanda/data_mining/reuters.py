@@ -6,8 +6,8 @@ import re
 import requests
 from pymongo import MongoClient
 
-from src.api.db.mongo import Mongo
-from src.api.data_mining.parser import SiteMapParser
+from src.amanda.db.mongo import Mongo
+from src.amanda.data_mining.parser import SiteMapParser
 
 class Reuters(SiteMapParser):
 
@@ -35,6 +35,16 @@ class Reuters(SiteMapParser):
         text = [''.join(text[num].text) for num, val in enumerate(text)]
         text = "".join(text)
         return text
+
+    def _clean_up_text(self, website):
+        # Given text remove unneccesary strings such as 3 Min READ
+        text = self._extract_text(website)
+        if '(Reuters)' in text:
+            text = text.split('(Reuters) - ')[1] # Eliminate # Mins (Reuters)-
+            text = text.split('©')[0] # Eliminates copyright at the bottom of article
+            return text
+        else:
+            return text
 
     def _extract_title(self, website):
         # Extracts the title from the html page
@@ -80,16 +90,15 @@ class Reuters(SiteMapParser):
             website = requests.get(urls[index]).content.decode('utf-8')
             query = { 
                 "title" : self._extract_title(website),
-                "article" : self._extract_text(website),
+                "article" : self._clean_up_text(website=website),
                 "authors" : self._extract_authors(website),
-                "meta" : {
-                    "url" : urls[index],
-                    "tags" : self._extract_tags(website)
-                    }
+                "url" : urls[index],
+                "tags" : self._extract_tags(website)
                 }
-            check_query = {"title" : self._extract_title(website)}
-            check = self.mongo.check_collection(db=self.db, collection='reuters',query=check_query)
+            check_query = {"url" : urls[index]}
+            check = self.mongo.check_collection(db=self.db, collection='reuters',query=check_query) # Problem here
             if check == False: # Checks that doesn't already exist in db
+                print(index)
                 reuters.insert_one(query).inserted_id
 
     def url_type(self, url):

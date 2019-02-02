@@ -15,7 +15,7 @@ class Mongo(object):
     def check_collection(self, db, collection,query):
         # Check if collection exists in db
 
-        database = self.client[db]
+        database = self.client()[db]
         collections = database[collection]
         result = collections.find(query)
         if collections.find(query).count() > 0:

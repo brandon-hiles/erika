@@ -3,8 +3,8 @@ __author__ = "Brandon Hiles"
 
 from pymongo import MongoClient
 
-from src.api.db.mongo import Mongo
-from src.api.data_mining.parser import SiteMapParser
+from src.amanda.db.mongo import Mongo
+from src.amanda.data_mining.parser import SiteMapParser
 
 class NewYorkTimes(SiteMapParser):
 

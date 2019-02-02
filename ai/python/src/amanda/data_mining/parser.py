@@ -124,6 +124,6 @@ class SiteMapParser(object):
         data = self.parse_data(data=sitemaps)[1]
         urls = []
         for num, value in enumerate(data):
-            print(num)
+            #print(num)
             urls.append(data[num])
         return urls
