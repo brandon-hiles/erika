@@ -22,8 +22,8 @@ class Mongo(object):
                 'title' : result['title'],
                 'article': result['article'],
                 'authors': result['authors'],
-                'url' : result['meta']['url'],
-                'tags': result['meta']['tags']
+                'url' : result['url'],
+                'tags': result['tags']
             }
         ]
 
