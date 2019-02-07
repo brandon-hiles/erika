@@ -1,7 +1,7 @@
 # erika
 
-Erika will be an AI economic assistant, that is capable of providing real-time
-economic data, which (ideally) will be equivilant to that of an econmic expert.
+Erika will be an AI investment assistant, that is capable of providing real-time
+financial decisions, which (ideally) will be equivilant to that of a day time trader.
 
 Technical Information:
 
