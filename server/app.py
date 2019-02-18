@@ -1,4 +1,6 @@
-from flask import Flask, request, jsonify, abort
+from flask import Flask, request, render_template, jsonify, abort
+from bson.objectid import ObjectId
+
 
 from src.api.mongo import Mongo # Local DB
 #from src.api.aws import *
@@ -11,10 +13,15 @@ port = 27017
 
 mongo = Mongo(host=host, port=port)
 
-@app.route('/api/v1.0/db/')
+@app.route('/')
+def open():
+    return '<h1> Erika Backend </h1>'
+
+@app.route('/api/db/id/', methods=['GET', 'POST'])
 def db():
 	# Database Page used for searching for data
-    example_query = {"title" : " Merkel protege suggests reducing gas flow through Nord Stream 2 pipeline "}
+    _id = request.args.get('id')
+    example_query = {"_id": ObjectId(_id)}
     data = mongo.json_data(db='news', collection='reuters', query=example_query)
     return data
 
