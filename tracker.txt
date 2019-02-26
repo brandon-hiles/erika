@@ -1,0 +1,38 @@
+Feb Week 4 Updates:
+------------------------------
+Client Notes:
+
+1. Develop GET Request to retrieve json data
+(If this step is NOT meant, we can work with mockup data)
+2. Develop the basic mockup of dashboard.
+
+Estimated Time:
+1. End of Day Thursday
+2. End of Day Saturday
+
+Server Notes:
+
+1. Work on incorporating the use of POST requests to
+Database
+2. Document some current functionalities of DB.
+
+Estimated Time:
+1. End of Day Friday
+2. End of Day Sunday
+
+AI Notes:
+
+1. Read some papers on economic modelling with NLP
+
+Estimated Time:
+1. End of 1st week March
+
+Data Visualization:
+
+1. Work on learning Shiny for R (Basic understanding)
+2. Work on understanding D3.js  (Basic understanding)
+
+Estimated Time:
+1. End of 2nd Week March
+2. End of 2nd Week March
+------------------------------
