@@ -24,9 +24,13 @@ def db():
     try:
         example_query = {"_id": ObjectId(_id)}
         data = mongo.json_data(db='news', collection='reuters', query=example_query)
-        return data
+        return render_template('dashboard.html', data=data.json['data'][0])
     except InvalidId:
         return render_template('error.html')
+
+@app.route('/documentation/', methods=['GET'])
+def documentation():
+    return render_template('documentation.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
