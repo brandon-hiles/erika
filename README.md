@@ -12,3 +12,6 @@ Front-end: Angular7
 Back-end: Flask
 
 Deployment: AWS (Most likely)
+
+
+For up-to-date Features, check out my trello board: https://trello.com/b/RaNtivAv/erika
