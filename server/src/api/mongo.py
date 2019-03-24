@@ -3,28 +3,35 @@ from pymongo import MongoClient
 
 class Mongo(object):
 
-    def __init__(self, host, port):
-	    self.host = host
-	    self.port = port
+    def __init__(self, host, port, db):
+        self.host = host
+        self.port = port
+        self.client = MongoClient(self.host, self.port)
+        self.db = self.client[db]
 
-    def client(self):
-	    return MongoClient(self.host, self.port)
+    def get_query(self, collection, query):
+        # Helper function: Gets result from db based on collection and query
+        return self.db[collection].find(query)
 
-    def json_data(self, db, collection, query):
-        # Return json file of data from mongoDB
-        client = self.client()
-        db = client[db]
-        collection = db[collection]
-        result = collection.find_one(query)
+    def article(self, collection, query):
+        # Article Endpoint
 
-        data = [
-            {
-                'title' : result['title'],
-                'article': result['article'],
-                'authors': result['authors'],
-                'url' : result['url'],
-                'tags': result['tags']
-            }
-        ]
+        result = self.get_query(collection=collection, query=query)
+        if result.count() <= 0:
+            return jsonify({"Status Code" : "404"})
 
-        return jsonify({'data' : data})
+        data = []
+        for index in range(0, result.count()):
+            author = result[index]['authors']
+            if author is None:
+                author = "Not specified"
+            data.append(
+                {
+                    'Status Code' : '200',
+                    'Article' : result[index]['article'],
+                    'Authors' : author,
+                    'Title': result[index]['title'],
+                    'URL' : result[index]['meta']['url']
+                }
+            )
+        return jsonify({'articles' : data})

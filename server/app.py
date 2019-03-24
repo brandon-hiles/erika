@@ -11,22 +11,19 @@ app = Flask(__name__) # Setup flask server
 host = 'localhost'
 port = 27017
 
-mongo = Mongo(host=host, port=port)
+mongo = Mongo(host=host, port=port, db="news")
 
 @app.route('/')
 def open():
     return render_template('base.html')
 
-@app.route('/api/db/id/', methods=['GET', 'POST'])
-def db():
-	# Database Page used for searching for data
-    _id = request.args.get('id')
-    try:
-        example_query = {"_id": ObjectId(_id)}
-        data = mongo.json_data(db='news', collection='reuters', query=example_query)
-        return render_template('dashboard.html', data=data.json['data'][0])
-    except InvalidId:
-        return render_template('error.html')
+@app.route('/api/db/<string:collection>/articles', methods=['GET'])
+def articles(collection):
+    # Article Endpoint
+
+    parm = request.args.get('topic')
+    example_query = { '$text' : {'$search' : parm} }
+    return mongo.article(collection=collection, query=example_query)
 
 @app.route('/documentation/', methods=['GET'])
 def documentation():
