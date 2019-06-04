@@ -2,39 +2,43 @@
 
 <head>
   <style>
-    .container_1 {
-
+    .main_container {
+      display: flex;
+      width: 100%;
     }
-    .container_2 {
-
-    }
-    .container_3 {
-
-    }
-    .container_4 {
-
-    }
-    .container_5 {
-      
+    .sub_container {
+      flex: 1;
+      padding: 16px;
+      align-content: center;
     }
   </style>
 
 </head>
 
 <body>
-  <div class="container_1">
-    <p> Title : {{ data['title'] }} </p>
+  <div class="main_container">
+    <div class="sub_container">
+      <p> Title : {{ data['title'] }} </p>
+    </div>
   </div>
-  <div class="container_2">
-    <p> Article : {{ data['article'] }} </p>
+    <div class="main_container">
+      <div class="sub_container">
+        <p> Article : {{ data['article'] }} </p>
+    </div>
   </div>
-  <div class="container_3">
-    <p> Author : {{ data['authors'] }} </p>
+    <div class="main_container">
+      <div class="sub_container">
+        <p> Author : {{ data['authors'] }} </p>
+    </div>
   </div>
-  <div class="container_4">
-    <p> Url : {{ data['url'] }} </p>
-  </div>
-  <div class="container_5">
-    <p> Tags : {{ data['tags'] }} </p>
-  </div>
+    <div class="main_container">
+      <div class="sub_container">
+        <p> Url : {{ data['url'] }}</p>
+    </div>
+  </div>  
+      <div class="main_container">
+      <div class="sub_container">
+        <p> Tags : {{ data['tags'] }}</p>
+    </div>
+  </div>     
 </body>
