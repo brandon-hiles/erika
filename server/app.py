@@ -15,19 +15,33 @@ mongo = Mongo(host=host, port=port, db="news")
 
 @app.route('/')
 def open():
+    # Landing Page
     return render_template('base.html')
+
+@app.route('/api/documentation/', methods=['GET'])
+def documentation():
+    # Documentation Endpoing
+    return render_template('documentation.html')
+
+@app.route('/api/db', methods=['GET'])
+def database():
+    return render_template('database.html')
 
 @app.route('/api/db/<string:collection>/articles', methods=['GET'])
 def articles(collection):
-    # Article Endpoint
+    # Database/Article Endpoint
 
     parm = request.args.get('topic')
     example_query = { '$text' : {'$search' : parm} }
     return mongo.article(collection=collection, query=example_query)
 
-@app.route('/documentation/', methods=['GET'])
-def documentation():
-    return render_template('documentation.html')
+@app.route('/api/ai', methods=['GET'])
+def ai():
+    return render_template('ai.html')
+
+@app.route('/api/data-mining', methods=['GET'])
+def data_mining():
+    return render_template('data-mining.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
