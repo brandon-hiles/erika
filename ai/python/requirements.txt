@@ -1,5 +1,0 @@
-pymongo
-requests
-bs4
-nltk
-python-daemon

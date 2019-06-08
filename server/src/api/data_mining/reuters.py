@@ -85,6 +85,7 @@ class Reuters(SiteMapParser):
         reuters = db['reuters']
 
         urls = super().get_websites()
+        ids = []
 
         for index in range(0, upper_bound+1):
             website = requests.get(urls[index]).content.decode('utf-8')
@@ -99,7 +100,9 @@ class Reuters(SiteMapParser):
             check = self.mongo.check_collection(db=self.db, collection='reuters',query=check_query) # Problem here
             if check == False: # Checks that doesn't already exist in db
                 print(index)
-                reuters.insert_one(query).inserted_id
+                _id = reuters.insert_one(query).inserted_id
+                ids.append(_id)
+        return ids
 
     def url_type(self, url):
         # There are 2 types of urls presented in sitemap data:

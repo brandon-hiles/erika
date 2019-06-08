@@ -18,20 +18,19 @@ class Mongo(object):
 
         result = self.get_query(collection=collection, query=query)
         if result.count() <= 0:
-            return jsonify({"Status Code" : "404"})
+            return jsonify(
+            {
+            "Status Code" : "404",
+            "Article" : "Article not found on servers"
+            })
 
         data = []
         for index in range(0, result.count()):
-            author = result[index]['authors']
-            if author is None:
-                author = "Not specified"
             data.append(
                 {
                     'Status Code' : '200',
                     'Article' : result[index]['article'],
-                    'Authors' : author,
-                    'Title': result[index]['title'],
-                    'URL' : result[index]['meta']['url']
+                    'URL' : result[index]['url']
                 }
             )
         return jsonify({'articles' : data})
