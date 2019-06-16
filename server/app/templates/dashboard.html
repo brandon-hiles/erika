@@ -1,0 +1,44 @@
+<!doctype html>
+
+<head>
+  <style>
+    .main_container {
+      display: flex;
+      width: 100%;
+    }
+    .sub_container {
+      flex: 1;
+      padding: 16px;
+      align-content: center;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="main_container">
+    <div class="sub_container">
+      <p> Title : {{ data['title'] }} </p>
+    </div>
+  </div>
+    <div class="main_container">
+      <div class="sub_container">
+        <p> Article : {{ data['article'] }} </p>
+    </div>
+  </div>
+    <div class="main_container">
+      <div class="sub_container">
+        <p> Author : {{ data['authors'] }} </p>
+    </div>
+  </div>
+    <div class="main_container">
+      <div class="sub_container">
+        <p> Url : {{ data['url'] }}</p>
+    </div>
+  </div>  
+      <div class="main_container">
+      <div class="sub_container">
+        <p> Tags : {{ data['tags'] }}</p>
+    </div>
+  </div>     
+</body>
