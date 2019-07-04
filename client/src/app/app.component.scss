@@ -1,0 +1,20 @@
+*,
+html,
+body {
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 1.3em;
+
+    a {
+        color: white;
+    }
+}
