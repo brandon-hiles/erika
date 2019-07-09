@@ -10,6 +10,8 @@ echo "Download Database Libraries"
 pip3 install SQLAlchemy
 pip3 install flask-sqlalchemy
 pip3 install flask-migrate
+pip3 install pymysql
+pip3 install pymongo
 
 echo "Download AI Libraries"
 pip3 install tensorflow
