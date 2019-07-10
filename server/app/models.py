@@ -12,8 +12,9 @@ class User(db.Model):
 class Articles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     article = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    article_source = db.Column(db.String(160))
+    timestamp = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return '<Article {}>'.format(self.body)    
+        return '<Article {}>'.format(self.body)
