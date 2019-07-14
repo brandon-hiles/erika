@@ -8,4 +8,7 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from app import routes, models
+from app import models
+
+from app.api.v1 import api
+app.register_blueprint(api, url_prefix='/api/v1')
