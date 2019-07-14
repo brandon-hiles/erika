@@ -125,3 +125,7 @@ def deploy(instance):
     ec2_list.append(ec2_dict)
     json_string = json.dumps(ec2_list)
     return jsonify(AWS=json_string)
+
+@api.route('/documentation', methods=['GET'])
+def documentation():
+    return 'documentation endpoint'
