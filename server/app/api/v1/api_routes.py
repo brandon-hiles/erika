@@ -9,7 +9,7 @@ from sqlalchemy import exc
 
 from app.api.v1 import api
 from app.api.v1.src.mongo import Mongo
-from app.api.v1.src.user import User_Obj
+from app.api.v1.src.user import User_Object
 
 # Grab environment variables
 dotenv_path = sys.path[0] + '/.env'
@@ -26,63 +26,56 @@ mongo = Mongo(host=mongo_host, port=mongo_port, db="news")
 data_souces = ['reuters', 'wsj', 'nyt']
 
 @api.route('/db/user/store', methods=['POST'])
-def store_user():
-    username = request.args.get('username')
-    email = request.args.get('email')
+def store():
+    # Store Users Endpoint
 
-    user = User_Obj(username=username, email=email)
+    # Initalize our user requested parameters
+    name = request.args.get('name')
+    email = request.args.get('email')
+    password = request.args.get('password')
+
+    # Initialize our User Object
+    user = User_Object(
+     full_name=name,
+     email=email,
+     password=password)
+
     try:
         user.store()
-        return jsonify({'Status' : 200, 'Message' : 'User has been successfully added'})
+        return jsonify({
+        'Status' : 200,
+        'Message' : 'User has been successfully added'
+        })
     except exc.SQLAlchemyError:
-        return jsonify({'Status' : 404, 'Message' : 'User has already been added'})
+        return jsonify({
+        'Status' : 404,
+        'Message' : 'User has already been added'
+        })
 
-# CRUD Endpoints for database
-@api.route('/db/store', methods=['POST'])
-def create_database_table():
-    # Create Endpoint (C)
-    database = request.args.get('database')
-    table = request.args.get('table')
+@api.route('/db/user/check', methods=['GET'])
+def check_user():
+    # Check user endpoint
 
-    if db_type == 'SQL':
-        return f"CREATE: You've slected {db_type} type"
-    elif db_type == 'NOSQL':
-        return f"CREATE: You've selected {db_type} type"
-    else:
-        return "Please enter a valid service"
+    # Initiate our user requested parameters
+    email = request.args.get("email")
+    password = request.args.get("password")
 
-@api.route('/db/<db_type>/<database>/<table>', methods=['GET'])
-def read_database_response(db_type, database, table):
-    # Read Endpoint (R)
+    # Initiate our User Object
+    user = User_Object(full_name="",
+    email=email,
+    password=password)
 
-    if db_type == 'SQL':
-        return f"READ: You've selected {db_type} type"
-    elif db_type == 'NOSQL':
-        return f"READ: You've selected {db_type} type"
-    else:
-        return 'Please enter a valid service'
-
-@api.route('/db/<db_type>/<database>/<table>/update', methods=['PUT'])
-def update_database(db_type, database, table):
-    # Update Endoint (U)
-
-    if db_type == 'SQL':
-        return f"UPDATE: You've selected {db_type} type"
-    elif db_type == 'NOSQL':
-        return f"UPDATE: You've selected {db_type} type"
-    else:
-        return "Please enter a valid service"
-
-@api.route('/db/<db_type>/<database>/<table>/delete', methods=['DELETE'])
-def delete_database(db_type, database, table):
-    # Delete Endpoint (D)
-
-    if db_type == 'SQL':
-        return f"DELETE: You've selected {db_type} type"
-    elif db_type == 'NOSQL':
-        return f"DELETE: You've selected {db_type} type"
-    else:
-        return "Please enter a valid service"
+   try:
+        user.check()
+        return jsonify({
+        'Status' : 200,
+        'Message' : 'User does exist in the database'
+        })
+    except exc.SQLAlchemyError:
+        return jsonify({
+        'Status' : 404,
+        'Message' : 'User does NOT exist in the database'
+        })
 
 # AI Endpoints
 @api.route('/ai/train', methods=['GET'])
