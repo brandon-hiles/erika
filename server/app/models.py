@@ -7,7 +7,7 @@ class User(db.Model):
     password = db.Column(db.String(128))
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return '<User {}>'.format(self.email)
 
 class Articles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -15,6 +15,3 @@ class Articles(db.Model):
     article_source = db.Column(db.String(160))
     timestamp = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    def __repr__(self):
-        return '<Article {}>'.format(self.body)

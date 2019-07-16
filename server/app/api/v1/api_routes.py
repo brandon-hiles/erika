@@ -26,7 +26,7 @@ mongo = Mongo(host=mongo_host, port=mongo_port, db="news")
 data_souces = ['reuters', 'wsj', 'nyt']
 
 @api.route('/db/user/store', methods=['POST'])
-def store():
+def store_user():
     # Store Users Endpoint
 
     # Initalize our user requested parameters
@@ -40,17 +40,7 @@ def store():
      email=email,
      password=password)
 
-    try:
-        user.store()
-        return jsonify({
-        'Status' : 200,
-        'Message' : 'User has been successfully added'
-        })
-    except exc.SQLAlchemyError:
-        return jsonify({
-        'Status' : 404,
-        'Message' : 'User has already been added'
-        })
+    return user.store()
 
 @api.route('/db/user/check', methods=['GET'])
 def check_user():
@@ -65,17 +55,41 @@ def check_user():
     email=email,
     password=password)
 
-   try:
-        user.check()
-        return jsonify({
-        'Status' : 200,
-        'Message' : 'User does exist in the database'
-        })
-    except exc.SQLAlchemyError:
-        return jsonify({
-        'Status' : 404,
-        'Message' : 'User does NOT exist in the database'
-        })
+    return user.check()
+
+@api.route('/db/user/update', methods=['PUT'])
+def update_user():
+    # Update Users Endpoint
+
+    # Initialize our user requested parameters
+    name = request.args.get('name')
+    email = request.args.get('email')
+    password = request.args.get('password')
+
+    # Initialize our User Object
+    user = User_Object(
+    full_name=name,
+    email=email,
+    password=password)
+
+    return user.update()
+
+@api.route('/db/user/delete', methods=['DELETE'])
+def delete_user():
+    # Delete Users Endpoint
+
+    # Initialize our user requested parameters
+    name = request.args.get('name')
+    email = request.args.get('email')
+    password = request.args.get('password')
+
+    # Initialize our User Object
+    user = User_Object(
+    full_name=name,
+    email=email,
+    password=password)
+
+    return user.delete()
 
 # AI Endpoints
 @api.route('/ai/train', methods=['GET'])
