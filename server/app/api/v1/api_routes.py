@@ -25,24 +25,26 @@ mongo = Mongo(host=mongo_host, port=mongo_port, db="news")
 # Validations
 data_souces = ['reuters', 'wsj', 'nyt']
 
-@api.route('/db/user/store', methods=['POST'])
+@api.route('/user/store', methods=['POST'])
 def store_user():
     # Store Users Endpoint
 
     # Initalize our user requested parameters
-    name = request.args.get('name')
+    first_name = request.args.get('first_name')
+    last_name = request.args.get('last_name')
     email = request.args.get('email')
     password = request.args.get('password')
 
     # Initialize our User Object
     user = User_Object(
-     full_name=name,
+     first_name=first_name,
+     last_name=last_name,
      email=email,
      password=password)
 
     return user.store()
 
-@api.route('/db/user/check', methods=['GET'])
+@api.route('/user/check', methods=['GET'])
 def check_user():
     # Check user endpoint
 
@@ -57,7 +59,7 @@ def check_user():
 
     return user.check()
 
-@api.route('/db/user/update', methods=['PUT'])
+@api.route('/user/update', methods=['PUT'])
 def update_user():
     # Update Users Endpoint
 
@@ -74,7 +76,7 @@ def update_user():
 
     return user.update()
 
-@api.route('/db/user/delete', methods=['DELETE'])
+@api.route('/user/delete', methods=['DELETE'])
 def delete_user():
     # Delete Users Endpoint
 

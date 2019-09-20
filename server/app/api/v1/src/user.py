@@ -18,13 +18,15 @@ class User_Object(object):
     hence something went wrong.
     """
 
-    def __init__(self, full_name, email, password):
-        self.full_name = full_name
+    def __init__(self, first_name, last_name, email, password):
+        self.first_name = first_name
+        self.last_name = last_name
         self.email = email
         self.password = password
 
     def store(self):
-        user = User(full_name=self.full_name,
+        user = User(first_name=self.first_name,
+        last_name=self.last_name,
         email = self.email,
         password = self.password)
 
@@ -46,7 +48,7 @@ class User_Object(object):
         email=self.email,
         password=self.password)
 
-        check = f"SELECT * FROM user WHERE email='{self.email}' and password='{self.password}'"
+        SQL_check = f"SELECT * FROM user WHERE email='{self.email}' and password='{self.password}'"
         result = db.engine.execute(SQL_check) # Executes SQL statement
         data = result.fetchall()
 
@@ -62,11 +64,12 @@ class User_Object(object):
             })
 
     def update(self):
-        user = User(full_name=self.full_name,
+        user = User(first_name=self.first_name,
+        last_name=self.last_name,
         email = self.email,
         password = self.password)
 
-        update = f"<Insert Update SQL Statement"
+        update = f"UPDATE user SET first_name= "
 
         return jsonify({
         'Status' : 1,
